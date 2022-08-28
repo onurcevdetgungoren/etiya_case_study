@@ -37,18 +37,26 @@ class GameDetailCard extends StatelessWidget {
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(50),
                           bottomRight: Radius.circular(50)),
-                      child: Container(
-                        height: deviceHeight * 0.3,
-                        width: deviceWidth * 1,
-                        alignment: Alignment.bottomLeft,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                            state.gameDetail.backgroundImage!,
-                          ),
-                        )),
-                      ),
+                      child: state.gameDetail.backgroundImage != null
+                          ? Container(
+                              height: deviceHeight * 0.3,
+                              width: deviceWidth * 1,
+                              alignment: Alignment.bottomLeft,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: NetworkImage(
+                                  state.gameDetail.backgroundImage!,
+                                ),
+                              )),
+                            )
+                          : Container(
+                              height: deviceHeight * 0.3,
+                              width: deviceWidth * 1,
+                              alignment: Alignment.bottomLeft,
+                              decoration:
+                                  const BoxDecoration(color: Colors.grey),
+                            ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -57,7 +65,9 @@ class GameDetailCard extends StatelessWidget {
                         children: [
                           Flexible(
                             child: Text(
-                              state.gameDetail.name.toString(),
+                              state.gameDetail.name != null
+                                  ? state.gameDetail.name.toString()
+                                  : "-",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: const TextStyle(
@@ -76,7 +86,9 @@ class GameDetailCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  state.gameDetail.rating.toString(),
+                                  state.gameDetail.rating != null
+                                      ? state.gameDetail.rating.toString()
+                                      : "-",
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -113,8 +125,10 @@ class GameDetailCard extends StatelessWidget {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    state.gameDetail.publishers![0].name
-                                        .toString(),
+                                    state.gameDetail.publishers!.isNotEmpty
+                                        ? state.gameDetail.publishers![0].name
+                                            .toString()
+                                        : "-",
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(

@@ -25,9 +25,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     on<FetchGameEvent>((event, emit) async {
       try {
         if (event.search.length >= 3) {
-          emit(const GameLoadingState());
           _page = 0;
           _page++;
+          emit(const GameLoadingState());
           _game = await _gameRepository.getGames(_page.toString(), event.search,
               _pageSize.toString(), _platformId, _orderingItem);
           _gameList = [];
@@ -40,6 +40,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           } else {
             _hasMore = false;
           }
+          emit(const GameInitialState());
           emit(GameLoadedState(
             game: _game,
             hasMore: _hasMore,
